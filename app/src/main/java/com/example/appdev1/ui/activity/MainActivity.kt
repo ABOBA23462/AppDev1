@@ -32,6 +32,14 @@ class MainActivity : AppCompatActivity() {
         wv.settings.setSupportZoom(true)
     }
 
+    override fun finish() = with(binding) {
+        if (wv.canGoBack()) {
+            wv.goBack()
+        } else {
+            super.finish()
+        }
+    }
+
     private fun setupDatabase() {
         val database = FirebaseDatabase.getInstance()
         databaseReference = database.getReference("webView")
@@ -43,7 +51,7 @@ class MainActivity : AppCompatActivity() {
             }
 
             override fun onCancelled(databaseError: DatabaseError) {
-                error()
+                Toast.makeText(applicationContext, "Упс", Toast.LENGTH_SHORT).show()
             }
         })
     }
@@ -56,19 +64,7 @@ class MainActivity : AppCompatActivity() {
             navHost.visibility = View.GONE
             wv.visibility = View.VISIBLE
             wv.webViewClient = WebViewClient()
-            wv.loadUrl("https://www.google.ru/?client=safari&channel=mac_bm")
-        }
-    }
-
-    private fun error() {
-        Toast.makeText(applicationContext, "Упс", Toast.LENGTH_SHORT).show()
-    }
-
-    override fun finish() = with(binding) {
-        if (wv.canGoBack()) {
-            wv.goBack()
-        } else {
-            super.finish()
+            wv.loadUrl("https://nomadtrust.space/zZYtDN")
         }
     }
 }
