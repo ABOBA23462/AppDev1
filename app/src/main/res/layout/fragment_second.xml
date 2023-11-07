@@ -7,6 +7,15 @@
     android:background="@drawable/background"
     tools:context=".ui.frags.SecondFragment">
 
+    <com.google.android.material.card.MaterialCardView
+        android:id="@+id/cv_questionText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="24dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintBottom_toTopOf="@id/cv_radioGroup"
+        app:layout_constraintStart_toStartOf="parent">
+
     <TextView
         android:id="@+id/questionText"
         android:layout_width="wrap_content"
@@ -14,88 +23,150 @@
         android:text="Как называется столица Франции?"
         android:textSize="18sp"
         android:textStyle="bold"
-        android:textColor="@color/white"
-        app:layout_constraintBottom_toTopOf="@id/btn_return"
-        android:textAlignment="center"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        android:padding="14dp"
+        android:textColor="@color/black"
+        android:textAlignment="center"/>
+
+    </com.google.android.material.card.MaterialCardView>
 
     <com.google.android.material.card.MaterialCardView
-        android:id="@+id/cv_answer"
+        android:id="@+id/cv_radioGroup"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        app:layout_constraintEnd_toEndOf="parent"
         android:layout_marginHorizontal="16dp"
         android:layout_marginBottom="24dp"
-        app:strokeWidth="2dp"
-        android:backgroundTint="#F2FFFFFF"
-        app:strokeColor="#4CAF50"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        >
 
-        <EditText
-            android:id="@+id/et_answer"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:backgroundTint="#00000000"
-            android:maxLines="1"
-            android:textSize="18dp"
-            android:padding="15dp"
-            android:textStyle="bold"
+    <RadioGroup
+        android:id="@+id/radioGroup"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="14dp"
+        android:background="@color/white">
+
+        <RadioButton
+            android:id="@+id/option1"
             android:textColor="@color/black"
-            android:hint="Введите ваш ответ"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            android:textStyle="bold"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Option 1" />
+
+        <RadioButton
+            android:id="@+id/option2"
+            android:textColor="@color/black"
+            android:textStyle="bold"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Option 2" />
+        <RadioButton
+            android:id="@+id/option3"
+            android:textColor="@color/black"
+            android:textStyle="bold"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Option 3" />
+        <RadioButton
+            android:id="@+id/option4"
+            android:textColor="@color/black"
+            android:textStyle="bold"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Option 4" />
+    </RadioGroup>
 
     </com.google.android.material.card.MaterialCardView>
 
     <com.google.android.material.button.MaterialButton
-        android:id="@+id/btn_next"
+        android:id="@+id/btnNext"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@id/cv_answer"
         android:layout_marginHorizontal="24dp"
         android:layout_marginTop="14dp"
         android:layout_marginEnd="16dp"
         app:strokeColor="@color/white"
         app:strokeWidth="1dp"
-        android:backgroundTint="@color/green"
+        android:backgroundTint="@color/orange"
         android:textSize="18sp"
         android:paddingVertical="15dp"
-        android:text="далее"
+        android:text="Далее"
         android:textStyle="bold"
         app:cornerRadius="100dp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/cv_answer" />
+        app:layout_constraintTop_toBottomOf="@id/cv_radioGroup" />
+
+    <com.google.android.material.card.MaterialCardView
+        android:id="@+id/cv_score"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="4dp"
+        android:layout_marginHorizontal="16dp"
+        android:layout_marginBottom="24dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
 
     <TextView
-        android:id="@+id/tv_score"
+        android:id="@+id/tvScore"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Счет: 0"
         android:textStyle="bold"
+        android:padding="4dp"
         android:textSize="20sp"
-        android:textColor="@color/white"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"/>
+        android:textColor="@color/black"/>
+
+    </com.google.android.material.card.MaterialCardView>
 
     <com.google.android.material.button.MaterialButton
-        android:id="@+id/btn_return"
+        android:id="@+id/btnReturn"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@id/cv_answer"
         android:text="Заново"
         app:strokeWidth="1dp"
-        app:strokeColor="@color/white"
+        android:textSize="18sp"
         android:visibility="gone"
-        android:backgroundTint="@color/green"
+        android:paddingVertical="15dp"
+        app:strokeColor="@color/white"
+        android:backgroundTint="@color/orange"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintBottom_toBottomOf="parent"/>
+        app:layout_constraintTop_toBottomOf="@id/cv_radioGroup"
+        app:layout_constraintBottom_toBottomOf="parent" />
+
+    <FrameLayout
+        android:id="@+id/fl"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <ImageView
+            android:layout_width="200dp"
+            android:layout_height="200dp"
+            android:layout_gravity="center"
+            android:src="@drawable/ball"/>
+
+        <TextView
+            android:id="@+id/result"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text=""
+            android:textSize="55sp"
+            android:shadowDx="2"
+            android:layout_gravity="center"
+            android:shadowColor="@color/white"
+            android:shadowDy="2"
+            android:shadowRadius="1"
+            android:textAlignment="center"
+            android:textStyle="bold"
+            android:textColor="@color/white" />
+    </FrameLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>
