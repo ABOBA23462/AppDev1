@@ -48,21 +48,24 @@ class MainActivity : AppCompatActivity() {
         }
 
         binding.wv.webViewClient = object : WebViewClient() {
-            override fun onReceivedError(
+            override fun onReceivedHttpError(
                 view: WebView?,
                 request: WebResourceRequest?,
-                error: WebResourceError?
+                errorResponse: WebResourceResponse?
             ) {
-                if (error != null && (error.errorCode == ERROR_HOST_LOOKUP ||
-                            error.errorCode == ERROR_CONNECT ||
-                            error.errorCode == ERROR_TIMEOUT ||
-                            error.errorCode == ERROR_UNSUPPORTED_SCHEME)
-                ) {
-                    binding.wv.visibility = View.GONE
-                    binding.navHost.visibility = View.VISIBLE
+                super.onReceivedHttpError(view, request, errorResponse)
+
+                val statusCode = errorResponse?.statusCode ?: 0
+                if (statusCode == 404) {
+                    handleError()
                 }
             }
         }
+    }
+
+    private fun handleError() {
+        binding.wv.visibility = View.GONE
+        binding.navHost.visibility = View.VISIBLE
     }
 
     override fun onSaveInstanceState(outState: Bundle) {
