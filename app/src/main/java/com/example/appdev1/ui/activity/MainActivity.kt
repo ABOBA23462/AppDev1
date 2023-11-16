@@ -76,13 +76,14 @@ class MainActivity : AppCompatActivity() {
                 }
             }
 
+            @Deprecated("Deprecated in Java")
             override fun onReceivedError(
                 view: WebView?,
-                request: WebResourceRequest?,
-                error: WebResourceError?
+                errorCode: Int,
+                description: String?,
+                failingUrl: String?
             ) {
-                super.onReceivedError(view, request, error)
-
+                super.onReceivedError(view, errorCode, description, failingUrl)
                 handleError()
             }
         }
