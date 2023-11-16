@@ -3,24 +3,39 @@ package com.example.appdev1.ui.activity
 import android.annotation.SuppressLint
 import android.net.Uri
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import android.webkit.*
 import androidx.appcompat.app.AppCompatActivity
 import com.example.appdev1.databinding.ActivityMainBinding
+import im.delight.android.webview.AdvancedWebView
 
 class MainActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityMainBinding
+    private lateinit var webView: AdvancedWebView
+    private var initialUrl: String = "https://uzako.site/G4HVkV"
+
+
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
+
+        webView = binding.wv
+
         setupWebView()
 
-        val url = "https://uzako.site/G4HVkV"
-        binding.wv.loadUrl(url)
+        // Восстановление состояния
+        if (savedInstanceState != null) {
+            initialUrl = savedInstanceState.getString("initialUrl", "https://github.com")
+        }
+        if (savedInstanceState == null) {
+            webView.loadUrl(initialUrl)
+        }
     }
 
     @SuppressLint("SetJavaScriptEnabled")
@@ -60,6 +75,16 @@ class MainActivity : AppCompatActivity() {
                     handleError()
                 }
             }
+
+            override fun onReceivedError(
+                view: WebView?,
+                request: WebResourceRequest?,
+                error: WebResourceError?
+            ) {
+                super.onReceivedError(view, request, error)
+
+                handleError()
+            }
         }
     }
 
@@ -68,20 +93,17 @@ class MainActivity : AppCompatActivity() {
         binding.navHost.visibility = View.VISIBLE
     }
 
-    override fun onSaveInstanceState(outState: Bundle) {
-        super.onSaveInstanceState(outState)
-        binding.wv.saveState(outState)
-    }
-
-    override fun onRestoreInstanceState(savedInstanceState: Bundle) {
-        super.onRestoreInstanceState(savedInstanceState)
-        binding.wv.restoreState(savedInstanceState)
-    }
-
     override fun finish() {
-        if (binding.wv.canGoBack())
+        if (binding.wv.canGoBack()) {
             binding.wv.goBack()
-        else
+            Log.d("WebViewActivity", "goBack")
+        } else {
             super.finish()
+            Log.d("WebViewActivity", "super.finish()")
+        }
     }
 }
+
+
+//Заменить устаревший код
+

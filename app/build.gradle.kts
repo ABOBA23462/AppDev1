@@ -58,6 +58,12 @@ dependencies {
     implementation("androidx.navigation:navigation-fragment-ktx:$navVersion")
     implementation("androidx.navigation:navigation-ui-ktx:$navVersion")
 
-    implementation ("com.squareup.okhttp3:okhttp:4.11.0")
+    implementation ("com.github.delight-im:Android-AdvancedWebView:v3.0.0")
+
+    // OkHttp
+    implementation("com.squareup.okhttp3:okhttp-bom:4.10.0")
+    implementation("com.squareup.okhttp3:okhttp")
+    implementation("com.squareup.okhttp3:logging-interceptor:5.0.0-alpha.6")
+
 
 }
