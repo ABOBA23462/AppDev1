@@ -1,22 +1,19 @@
 package com.example.appdev1.ui.activity
 
-import android.annotation.SuppressLint
-import android.net.Uri
+import android.content.Intent
 import android.os.Bundle
 import android.util.Log
-import android.view.View
-import android.webkit.*
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.view.isVisible
+import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModelProvider
+import com.example.appdev1.base.UIState
 import com.example.appdev1.databinding.ActivityMainBinding
-import im.delight.android.webview.AdvancedWebView
 
 class MainActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityMainBinding
-    private lateinit var webView: AdvancedWebView
-    private var initialUrl: String = "https://uzako.site/G4HVkV"
-
-
+    private lateinit var  viewModel: MainViewModel
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -24,87 +21,38 @@ class MainActivity : AppCompatActivity() {
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
+            viewModel = ViewModelProvider(this).get(MainViewModel::class.java)
 
-        webView = binding.wv
+            viewModel.fetchData()
 
-        setupWebView()
+            viewModel.data.observe(this, Observer { uiState ->
+                Log.e("aboba", "1234", )
 
-        // Восстановление состояния
-        if (savedInstanceState != null) {
-            initialUrl = savedInstanceState.getString("initialUrl", "https://github.com")
-        }
-        if (savedInstanceState == null) {
-            webView.loadUrl(initialUrl)
-        }
-    }
+                when (uiState) {
+                    is UIState.Loading -> {
+                        // Handle loading state
+                        Log.e("aboba", "load", )
 
-    @SuppressLint("SetJavaScriptEnabled")
-    private fun setupWebView() {
-        val webSettings: WebSettings = binding.wv.settings
+                    }
+                    is UIState.Success -> {
+                        Log.e("aboba", "suc", )
+                        val data = uiState.data
+                        data?.let {
+                            val intent = Intent(this, WebViewActivity::class.java)
+                            intent.putExtra("url", it)  // Pass the data to WebViewActivity if needed
+                            startActivity(intent)
+                            finish()
+                        }
+                    }
+                    is UIState.Error -> {
+                        Log.e("aboba", "chort", )
+                    }
+                    else -> {
+                        Log.e("aboba", "else", )
 
-        webSettings.javaScriptEnabled = true
-
-        val cookieManager: CookieManager = CookieManager.getInstance()
-        cookieManager.setAcceptCookie(true)
-        cookieManager.setAcceptThirdPartyCookies(binding.wv, true)
-
-        webSettings.setSupportZoom(true)
-        webSettings.builtInZoomControls = true
-        webSettings.displayZoomControls = false
-
-        binding.wv.webChromeClient = object : WebChromeClient() {
-            override fun onShowFileChooser(
-                webView: WebView?,
-                filePathCallback: ValueCallback<Array<Uri>>?,
-                fileChooserParams: FileChooserParams?
-            ): Boolean {
-                return true
-            }
-        }
-
-        binding.wv.webViewClient = object : WebViewClient() {
-            override fun onReceivedHttpError(
-                view: WebView?,
-                request: WebResourceRequest?,
-                errorResponse: WebResourceResponse?
-            ) {
-                super.onReceivedHttpError(view, request, errorResponse)
-
-                val statusCode = errorResponse?.statusCode ?: 0
-                if (statusCode == 404) {
-                    handleError()
+                        binding.navHost.isVisible = true
+                    }
                 }
-            }
-
-            @Deprecated("Deprecated in Java")
-            override fun onReceivedError(
-                view: WebView?,
-                errorCode: Int,
-                description: String?,
-                failingUrl: String?
-            ) {
-                super.onReceivedError(view, errorCode, description, failingUrl)
-                handleError()
-            }
-        }
-    }
-
-    private fun handleError() {
-        binding.wv.visibility = View.GONE
-        binding.navHost.visibility = View.VISIBLE
-    }
-
-    override fun finish() {
-        if (binding.wv.canGoBack()) {
-            binding.wv.goBack()
-            Log.d("WebViewActivity", "goBack")
-        } else {
-            super.finish()
-            Log.d("WebViewActivity", "super.finish()")
-        }
+            })
     }
 }
-
-
-//Заменить устаревший код
-
