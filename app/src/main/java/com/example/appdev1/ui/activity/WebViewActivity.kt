@@ -195,9 +195,4 @@ class WebViewActivity : AppCompatActivity(R.layout.activity_web_view), AdvancedW
     override fun onPageError(errorCode: Int, description: String?, failingUrl: String?) {
 
     }
-
-    override fun onStop() {
-        super.onStop()
-        finish()
-    }
 }

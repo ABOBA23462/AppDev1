@@ -1,6 +1,5 @@
 package com.example.appdev1.data.model
 
-import android.provider.ContactsContract.CommonDataKinds.Website
 import okhttp3.Call
 import okhttp3.Callback
 import okhttp3.OkHttpClient
